@@ -1,0 +1,9 @@
+max_entries,Tree,Avg_Node_Visits,Tree_Height
+4,R-tree,154.66,6
+4,R*-tree,140.68,6
+8,R-tree,70.0,4
+8,R*-tree,64.9,4
+12,R-tree,60.09,3
+12,R*-tree,56.4,3
+16,R-tree,68.06,2
+16,R*-tree,41.5,2
