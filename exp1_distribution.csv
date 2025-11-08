@@ -1,5 +1,0 @@
-Distribution,Tree,Build_Time(s),Avg_Node_Visits,Query_Time(s),Tree_Height
-Uniform,R-tree,0.101,70.82,0.011,3
-Uniform,R*-tree,0.180,53.15,0.009,3
-Clustered,R-tree,0.077,14.66,0.002,3
-Clustered,R*-tree,0.178,15.35,0.003,3

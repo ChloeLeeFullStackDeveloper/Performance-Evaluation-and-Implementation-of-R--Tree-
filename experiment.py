@@ -9,7 +9,17 @@ experiment.py — Extended evaluation suite
 import time, statistics, random
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 from rstar_tree import RTree, RStarTree, make_point_rect, random_points, clustered_points, Rect
+
+# Create results directory
+RESULTS_DIR = "results"
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
+def save_results(df, filename):
+    """Save results to CSV and PNG"""
+    df.to_csv(os.path.join(RESULTS_DIR, f"{filename}.csv"), index=False)
+    df.plot(kind='bar', x='Distribution', y='Avg_Node_Visits', title='R-tree vs R*-tree: Uniform vs Clustered Data').get_figure().savefig(os.path.join(RESULTS_DIR, f"{filename}.png"))
 
 # Set seed for reproducibility
 random.seed(42)
@@ -131,8 +141,8 @@ def experiment_distribution(n=2000, queries=100, max_entries=12):
     ax.grid(axis='y', alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig("exp1_distribution.png", dpi=150)
-    print("\n✅ Saved: exp1_distribution.png")
+    plt.savefig(os.path.join(RESULTS_DIR, "exp1_distribution.png"), dpi=150)
+    print(f"\n✅ Saved: {os.path.join(RESULTS_DIR, 'exp1_distribution.png')}")
     
     return df
 
@@ -201,8 +211,8 @@ def experiment_scalability(sizes=[500, 1000, 2000, 5000], queries=100, max_entri
     ax2.grid(alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig("exp2_scalability.png", dpi=150)
-    print("\n✅ Saved: exp2_scalability.png")
+    plt.savefig(os.path.join(RESULTS_DIR, "exp2_scalability.png"), dpi=150)
+    print(f"\n✅ Saved: {os.path.join(RESULTS_DIR, 'exp2_scalability.png')}")
     
     return df
 
@@ -272,8 +282,8 @@ def experiment_max_entries(n=2000, queries=100, max_vals=[4, 8, 12, 16]):
     ax2.grid(alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig("exp3_max_entries.png", dpi=150)
-    print("\n✅ Saved: exp3_max_entries.png")
+    plt.savefig(os.path.join(RESULTS_DIR, "exp3_max_entries.png"), dpi=150)
+    print(f"\n✅ Saved: {os.path.join(RESULTS_DIR, 'exp3_max_entries.png')}")
     
     return df
 
@@ -288,21 +298,21 @@ def run_all():
     print("="*60)
     
     df1 = experiment_distribution(n=2000, queries=100)
-    df1.to_csv("exp1_distribution.csv", index=False)
+    df1.to_csv(os.path.join(RESULTS_DIR, "exp1_distribution.csv"), index=False)
     
     df2 = experiment_scalability(sizes=[500, 1000, 2000, 5000])
-    df2.to_csv("exp2_scalability.csv", index=False)
+    df2.to_csv(os.path.join(RESULTS_DIR, "exp2_scalability.csv"), index=False)
     
     df3 = experiment_max_entries(n=2000, max_vals=[4, 8, 12, 16])
-    df3.to_csv("exp3_max_entries.csv", index=False)
+    df3.to_csv(os.path.join(RESULTS_DIR, "exp3_max_entries.csv"), index=False)
     
     print("\n" + "="*60)
     print("✅ All experiments complete!")
     print("="*60)
     print("\nGenerated files:")
-    print("  - exp1_distribution.png & .csv")
-    print("  - exp2_scalability.png & .csv")
-    print("  - exp3_max_entries.png & .csv")
+    print(f"  - {os.path.join(RESULTS_DIR, 'exp1_distribution.png')} & .csv")
+    print(f"  - {os.path.join(RESULTS_DIR, 'exp2_scalability.png')} & .csv")
+    print(f"  - {os.path.join(RESULTS_DIR, 'exp3_max_entries.png')} & .csv")
     
     return df1, df2, df3
 
